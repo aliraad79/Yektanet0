@@ -8,6 +8,9 @@ class Advertiser(models.Model):
     clicks = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.name
+
 class Ad(models.Model):
     id = models.IntegerField(primary_key=True ,unique=True)
     title = models.CharField(max_length=500)
@@ -15,4 +18,8 @@ class Ad(models.Model):
     link = models.CharField(max_length=1000)
     clicks = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
-    advertiser_id = models.ForeignKey(Advertiser,on_delete=models.CASCADE)
+    advertiser = models.ForeignKey(Advertiser,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title+ " " + str(self.id)
+
