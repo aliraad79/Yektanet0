@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Advertiser, Ad
+from .forms import CreateAdForm
 
 # Create your views here.
 
@@ -19,4 +20,10 @@ def count_ad_click(request, ad_id):
 
 
 def create_ad(request):
-    return HttpResponse(request)
+    if request.method == "POST":
+        form = CreateAdForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = CreateAdForm()
+    return render(request,'advertiser_mangement/create_ad.html',{'form':form})
