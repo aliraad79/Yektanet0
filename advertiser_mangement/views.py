@@ -24,6 +24,7 @@ def create_ad(request):
         form = CreateAdForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect('show-ad-all')
     else:
         form = CreateAdForm()
     return render(request,'advertiser_mangement/create_ad.html',{'form':form})
