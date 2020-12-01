@@ -12,7 +12,7 @@ class Advertiser(models.Model):
         return self.name
 
 class Ad(models.Model):
-    id = models.IntegerField(primary_key=True ,unique=True)
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=500)
     img = models.ImageField(default='default.png', upload_to='ads_pics')
     link = models.CharField(max_length=1000)
