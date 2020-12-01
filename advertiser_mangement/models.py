@@ -18,7 +18,7 @@ class Ad(models.Model):
     link = models.CharField(max_length=1000)
     clicks = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
-    advertiser = models.ForeignKey(Advertiser,on_delete=models.CASCADE)
+    advertiser = models.ForeignKey(Advertiser,on_delete=models.CASCADE,related_name='ads')
 
     def __str__(self):
         return self.title+ " " + str(self.id)
