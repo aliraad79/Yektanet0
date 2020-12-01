@@ -23,3 +23,8 @@ class Ad(models.Model):
     def __str__(self):
         return self.title+ " " + str(self.id)
 
+    def add_click(self):
+        self.clicks += 1
+
+    def add_view(self):
+        self.views += 1
