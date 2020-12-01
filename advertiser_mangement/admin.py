@@ -3,4 +3,5 @@ from .models import Ad,Advertiser
 
 # Register your models here.
 
-admin.site.register(Ad,Advertiser)
+admin.site.register(Ad)
+admin.site.register(Advertiser)
