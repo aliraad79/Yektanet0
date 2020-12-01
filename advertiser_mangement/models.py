@@ -8,7 +8,7 @@ class Advertiser(models.Model):
     clicks = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
 
-class Ad():
+class Ad(models.Model):
     id = models.IntegerField(primary_key=True ,unique=True)
     title = models.CharField(max_length=500)
     imgUrl = models.CharField(max_length=1000)
