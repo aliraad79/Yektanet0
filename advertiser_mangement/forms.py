@@ -1,14 +1,1 @@
 from django import forms
-from advertiser_mangement.models import Ad, Advertiser
-
-
-class CreateAdForm(forms.ModelForm):
-    class Meta:
-        model = Ad
-        fields = ['advertiser', 'title', 'image', 'link']
-
-
-class CreateAdvertiserForm(forms.ModelForm):
-    class Meta:
-        model = Advertiser
-        fields = ['name']

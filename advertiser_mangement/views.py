@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_list_or_404
 from .models import Advertiser, Ad
-from .forms import CreateAdForm, CreateAdvertiserForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
@@ -22,12 +21,6 @@ class CreateAd(CreateView):
     fields = ['advertiser', 'title', 'image', 'link']
 
 
-def create_advertiser(request):
-    if request.method == "POST":
-        form = CreateAdvertiserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('show-all-ads')
-    else:
-        form = CreateAdvertiserForm()
-    return render(request, 'advertiser_mangement/create_advertiser.html', {'form': form})
+class CreateAdvertiser(CreateView):
+    model = Advertiser
+    fields = ['name']
