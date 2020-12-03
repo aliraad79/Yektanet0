@@ -1,15 +1,12 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .models import Advertiser, Ad
 from .forms import CreateAdForm
-
-# Create your views here.
 
 
 def show_ads(request):
     advertisers = Advertiser.objects.all()
-    context = {'advertisers':advertisers}
-    return render(request,'advertiser_mangement/ads.html',context=context)
+    context = {'advertisers': advertisers}
+    return render(request, 'advertiser_mangement/ads.html', context=context)
 
 
 def count_ad_click(request, ad_id):
@@ -27,4 +24,4 @@ def create_ad(request):
             return redirect('show-ad-all')
     else:
         form = CreateAdForm()
-    return render(request,'advertiser_mangement/create_ad.html',{'form':form})
+    return render(request, 'advertiser_mangement/create_ad.html', {'form': form})
