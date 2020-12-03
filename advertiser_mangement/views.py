@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Advertiser, Ad
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, RedirectView
 
 
 def show_ads(request):
@@ -9,11 +9,13 @@ def show_ads(request):
     return render(request, 'advertiser_mangement/ads.html', context=context)
 
 
-def count_ad_click(request, ad_id):
-    ad = Ad.objects.get(id=ad_id)
-    ad.add_click()
-    ad.add_view()
-    return redirect(ad.link)
+class CountAdClick(RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        ad = get_object_or_404(Ad, pk=kwargs['ad_id'])
+        ad.add_click()
+        ad.add_view()
+        return ad.link
 
 
 class CreateAd(CreateView):
