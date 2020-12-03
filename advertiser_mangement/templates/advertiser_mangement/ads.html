@@ -15,7 +15,7 @@
                 <div class="row">
 		    {% for ad in advertiser.ads.all %}
 		        <div class="card col-md-2 p-0 mx-2">
-		            <a href="/click/{{ ad.id }}/">
+		            <a href="{% url 'click-add' ad.id %}/">
 		                <img src="{{ ad.image.url }}"
 		                     class="card-img-top">
 		                <div class="card-body">
