@@ -1,12 +1,12 @@
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404
 from .models import Advertiser, Ad
-from django.views.generic import CreateView, RedirectView
+from django.views.generic import CreateView, RedirectView, ListView
 
 
-def show_ads(request):
-    advertisers = get_list_or_404(Advertiser)
-    context = {'advertisers': advertisers}
-    return render(request, 'advertiser_mangement/ads.html', context=context)
+class AdvertiserListView(ListView):
+    model = Advertiser
+    template_name = 'advertiser_mangement/ads.html'
+    context_object_name = 'advertisers'
 
 
 class CountAdClick(RedirectView):
