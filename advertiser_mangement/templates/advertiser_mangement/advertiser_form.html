@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,12 +9,12 @@
 </head>
 <body>
 <div class="container" dir="ltr">
-        <h1>Create Advertiser</h1><br>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Save</button>
-        </form>
+    <h1>Create Ad</h1><br>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <br><button type="submit" class="btn btn-primary">Save</button>
+    </form>
 </div>
 </body>
 </html>
