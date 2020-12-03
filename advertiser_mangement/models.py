@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import redirect,reverse
 
 
 class Advertiser(models.Model):
@@ -28,3 +29,6 @@ class Ad(models.Model):
     def add_view(self):
         self.views += 1
         self.save()
+
+    def get_absolute_url(self):
+        return reverse('show-all-ads')
