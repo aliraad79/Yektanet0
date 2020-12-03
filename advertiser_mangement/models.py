@@ -1,5 +1,5 @@
 from django.db import models
-from django.shortcuts import redirect, reverse
+from django.shortcuts import reverse
 
 
 class Advertiser(models.Model):
