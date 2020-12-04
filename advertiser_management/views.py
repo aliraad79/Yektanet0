@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from .models import Advertiser, Ad
-from django.views.generic import CreateView, RedirectView, ListView
+from django.views.generic import CreateView, RedirectView, ListView, DetailView
 
 
 class AdvertiserListView(ListView):
@@ -31,3 +31,7 @@ class CreateAd(CreateView):
 class CreateAdvertiser(CreateView):
     model = Advertiser
     fields = ['name']
+
+
+class AdvertiserDetail(DetailView):
+    model = Advertiser
