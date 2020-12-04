@@ -11,6 +11,8 @@
     {% for advertiser in advertisers %}
         <div class="card mt-2 p-2">
             <h5 class="card-title">{{ advertiser.name }}</h5>
+            <h6>clicks : {{ advertiser.get_clicks }}</h6>
+            <h6>views : {{ advertiser.get_views }}</h6>
             <div class="card-body">
                 <div class="row">
 		    {% for ad in advertiser.ads.all %}

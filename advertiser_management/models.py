@@ -12,6 +12,18 @@ class Advertiser(models.Model):
     def get_absolute_url(self):
         return reverse('show-all-ads')
 
+    def get_clicks(self):
+        counter = 0
+        for i in self.ads.all():
+            counter += i.clicks
+        return counter
+
+    def get_views(self):
+        counter = 0
+        for i in self.ads.all():
+            counter += i.views
+        return counter
+
 
 class Ad(models.Model):
     id = models.AutoField(primary_key=True)
