@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from .models import Advertiser, Ad
 from django.views.generic import CreateView, RedirectView, ListView, DetailView
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class AdvertiserListView(ListView):
@@ -23,14 +24,16 @@ class CountAdClick(RedirectView):
         return ad.link
 
 
-class CreateAd(CreateView):
+class CreateAd(SuccessMessageMixin, CreateView):
     model = Ad
     fields = ['advertiser', 'title', 'image', 'link']
+    success_message = "Ad created successfully!!!"
 
 
-class CreateAdvertiser(CreateView):
+class CreateAdvertiser(SuccessMessageMixin, CreateView):
     model = Advertiser
     fields = ['name']
+    success_message = "Advertiser created successfully!!"
 
 
 class AdvertiserDetail(DetailView):
