@@ -3,9 +3,7 @@ Django settings for Yektanet project.
 
 """
 
-from pathlib import Path
 import environ
-import os
 
 # Quick-start development settings - unsuitable for production
 root = environ.Path(__file__) - 3  # get root of the project
@@ -16,16 +14,18 @@ SITE_ROOT = root()
 
 DEBUG = env.bool('DEBUG', default=False)
 
+# secret
+SECRET_KEY = env.str('SECRET_KEY')
+
 # DataBase setting
 DATABASES = {'default': env.db('DATABASE_URL')}
 
-public_root = root.path('public/')
 # Media and static setting
+public_root = root.path('Yektanet/')
 MEDIA_ROOT = public_root('media')
 MEDIA_URL = env.str('MEDIA_URL', default='media/')
 STATIC_ROOT = public_root('static')
 STATIC_URL = env.str('STATIC_URL', default='static/')
-SECRET_KEY = env.str('SECRET_KEY')
 
 ROOT_URLCONF = "Yektanet.urls"
 # allowed hosts
