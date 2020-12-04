@@ -4,19 +4,31 @@ Django settings for Yektanet project.
 """
 
 from pathlib import Path
+import environ
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 # Quick-start development settings - unsuitable for production
+root = environ.Path(__file__) - 3  # get root of the project
+env = environ.Env()
+environ.Env.read_env()  # reading .env file
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9pwn3czrl&*r0r(i4q)j3c&(j54w$%3q0#490nw_8^v6*ww6kd'
+SITE_ROOT = root()
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=False)
 
+# DataBase setting
+DATABASES = {'default': env.db('DATABASE_URL')}
+
+public_root = root.path('public/')
+# Media and static setting
+MEDIA_ROOT = public_root('media')
+MEDIA_URL = env.str('MEDIA_URL', default='media/')
+STATIC_ROOT = public_root('static')
+STATIC_URL = env.str('STATIC_URL', default='static/')
+SECRET_KEY = env.str('SECRET_KEY')
+
+ROOT_URLCONF = "Yektanet.urls"
+# allowed hosts
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -28,8 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'advertiser_management.apps.AdvertiserManagementConfig',
-    'crispy_forms',
+    'advertiser_management.apps.AdvertiserManagementConfig'
 ]
 
 MIDDLEWARE = [
@@ -41,8 +52,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-ROOT_URLCONF = 'Yektanet.urls'
 
 TEMPLATES = [
     {
@@ -61,15 +70,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Yektanet.wsgi.application'
-
-# Database
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 # Password validation
 
@@ -99,11 +99,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-
-STATIC_URL = '/static/'
-
-# Media settings
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
