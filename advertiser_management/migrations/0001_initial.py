@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('link', models.CharField(max_length=1000)),
                 ('clicks', models.IntegerField(default=0)),
                 ('views', models.IntegerField(default=0)),
-                ('advertiser', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='advertiser_mangement.advertiser')),
+                ('advertiser', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='advertiser_management.advertiser')),
             ],
         ),
     ]

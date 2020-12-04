@@ -5,7 +5,7 @@ from django.views.generic import CreateView, RedirectView, ListView
 
 class AdvertiserListView(ListView):
     model = Advertiser
-    template_name = 'advertiser_mangement/ads.html'
+    template_name = 'advertiser_management/ads.html'
     context_object_name = 'advertisers'
 
 

@@ -7,13 +7,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('advertiser_mangement', '0001_initial'),
+        ('advertiser_management', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='ad',
             name='advertiser',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ads', to='advertiser_mangement.advertiser'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ads', to='advertiser_management.advertiser'),
         ),
     ]
