@@ -8,13 +8,18 @@ class AdvertiserListView(ListView):
     template_name = 'advertiser_management/ads.html'
     context_object_name = 'advertisers'
 
+    def get(self, request, *args, **kwargs):
+        for i in Advertiser.objects.all():
+            for j in i.ads.all():
+                j.add_view()
+        return super().get(request, *args, **kwargs)
+
 
 class CountAdClick(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         ad = get_object_or_404(Ad, pk=kwargs['ad_id'])
         ad.add_click()
-        ad.add_view()
         return ad.link
 
 
