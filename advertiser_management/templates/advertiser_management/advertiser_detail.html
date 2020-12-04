@@ -1,37 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          crossorigin="anonymous">
-    <title>Advertiser view</title>
-</head>
-<body>
-<div class="container" dir="rtl">
-    <div class="card mt-2 p-2">
-        <h5 class="card-title">{{ object.name }}</h5>
-        <h6>clicks : {{ object.get_clicks }}</h6>
-        <h6>views : {{ object.get_views }}</h6>
-        <div class="card-body">
-            <div class="row">
-                {% for ad in object.ads.all %}
-                    <div class="card col-md-2 p-0 mx-2">
-                        <a href="{% url 'click-add' ad.id %}">
-                            <img src="{{ ad.image.url }}"
-                                 class="card-img-top">
-                            <div class="card-body">
-                                <span>{{ ad.title }}</span>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
+{% extends 'advertiser_management/base.html' %}
+{% block title %}
+    Advertiser view
+{% endblock %}
+
+{% block content %}
+    <div class="container" dir="rtl">
+        <div class="card mt-2 p-2">
+            <h5 class="card-title">{{ object.name }}</h5>
+            <h6>clicks : {{ object.get_clicks }}</h6>
+            <h6>views : {{ object.get_views }}</h6>
+            <div class="card-body">
+                <div class="row">
+                    {% for ad in object.ads.all %}
+                        <div class="card col-md-2 p-0 mx-2">
+                            <a href="{% url 'click-add' ad.id %}">
+                                <img src="{{ ad.image.url }}"
+                                     class="card-img-top">
+                                <div class="card-body">
+                                    <span>{{ ad.title }}</span>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container" dir="ltr">
-    <h5><a href="{% url 'create-advertiser' %}">Create Another Advertiser</a></h5>
-</div>
-
-</body>
-</html>
+{% endblock %}

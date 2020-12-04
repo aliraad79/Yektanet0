@@ -1,20 +1,16 @@
+{% extends 'advertiser_management/base.html' %}
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          crossorigin="anonymous">
-    <title>Create Ad</title>
-</head>
-<body>
-<div class="container" dir="ltr">
-    <h1>Create Ad</h1><br>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <br><button type="submit" class="btn btn-primary">Save</button>
-    </form>
-</div>
-</body>
-</html>
+{% block title %}
+    Create AD
+{% endblock %}
+{% block content %}
+    <div class="container" dir="ltr">
+        <h1>Create Ad</h1><br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+{% endblock %}
