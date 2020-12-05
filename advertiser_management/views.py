@@ -17,6 +17,12 @@ class AdvertiserListView(ListView):
         return super().get(request, *args, **kwargs)
 
 
+class AdListView(ListView):
+    model = Ad
+    template_name = 'advertiser_management/ad_detail.html'
+    context_object_name = 'ads'
+
+
 class CountAdClick(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):

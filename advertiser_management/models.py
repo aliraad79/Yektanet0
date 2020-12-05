@@ -14,7 +14,7 @@ class View(models.Model):
     advertiser_id = models.IntegerField()
     ad_id = models.IntegerField()
     ip = models.GenericIPAddressField()
-    click_time = models.DateTimeField(auto_now_add=True)
+    view_time = models.DateTimeField(auto_now_add=True)
 
 
 class Advertiser(models.Model):
