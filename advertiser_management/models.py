@@ -1,5 +1,20 @@
 from django.db import models
 from django.shortcuts import reverse
+from datetime import datetime
+
+
+class Click(models.Model):
+    advertiser_id = models.IntegerField()
+    ad_id = models.IntegerField()
+    ip = models.GenericIPAddressField()
+    click_time = models.DateTimeField(auto_now_add=True)
+
+
+class View(models.Model):
+    advertiser_id = models.IntegerField()
+    ad_id = models.IntegerField()
+    ip = models.GenericIPAddressField()
+    click_time = models.DateTimeField(auto_now_add=True)
 
 
 class Advertiser(models.Model):
@@ -13,16 +28,10 @@ class Advertiser(models.Model):
         return reverse('show-all-ads')
 
     def get_clicks(self):
-        counter = 0
-        for i in self.ads.all():
-            counter += i.clicks
-        return counter
+        return Click.objects.filter(advertiser_id=self.id).count()
 
     def get_views(self):
-        counter = 0
-        for i in self.ads.all():
-            counter += i.views
-        return counter
+        return View.objects.filter(advertiser_id=self.id).count()
 
 
 class Ad(models.Model):
@@ -30,20 +39,16 @@ class Ad(models.Model):
     title = models.CharField(max_length=500)
     image = models.ImageField(upload_to='ads_pics')
     link = models.URLField(max_length=1000)
-    clicks = models.IntegerField(default=0)
-    views = models.IntegerField(default=0)
     advertiser = models.ForeignKey(Advertiser, on_delete=models.CASCADE, related_name='ads')
 
     def __str__(self):
         return self.title + " " + str(self.id)
 
-    def add_click(self):
-        self.clicks += 1
-        self.save()
+    def add_click(self, ip):
+        Click.objects.create(advertiser_id=self.advertiser.id, ad_id=self.id, ip=ip, click_time=datetime.now())
 
-    def add_view(self):
-        self.views += 1
-        self.save()
+    def add_view(self, ip):
+        View.objects.create(advertiser_id=self.advertiser.id, ad_id=self.id, ip=ip, click_time=datetime.now())
 
     def get_absolute_url(self):
         return reverse('show-all-ads')
