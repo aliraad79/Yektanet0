@@ -10,9 +10,10 @@ class AdvertiserListView(ListView):
     context_object_name = 'advertisers'
 
     def get(self, request, *args, **kwargs):
+        ip = request.META.get('REMOTE_ADDR')
         for i in Advertiser.objects.all():
             for j in i.ads.all():
-                j.add_view()
+                j.add_view(ip)
         return super().get(request, *args, **kwargs)
 
 
@@ -20,7 +21,7 @@ class CountAdClick(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         ad = get_object_or_404(Ad, pk=kwargs['ad_id'])
-        ad.add_click()
+        ad.add_click(self.request.META.get('REMOTE_ADDR'))
         return ad.link
 
 

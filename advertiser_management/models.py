@@ -40,6 +40,7 @@ class Ad(models.Model):
     image = models.ImageField(upload_to='ads_pics')
     link = models.URLField(max_length=1000)
     advertiser = models.ForeignKey(Advertiser, on_delete=models.CASCADE, related_name='ads')
+    approve = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title + " " + str(self.id)
@@ -52,3 +53,6 @@ class Ad(models.Model):
 
     def get_absolute_url(self):
         return reverse('show-all-ads')
+
+    def approve_ad(self):
+        self.approve = True
