@@ -49,7 +49,7 @@ class Ad(models.Model):
         Click.objects.create(advertiser_id=self.advertiser.id, ad_id=self.id, ip=ip, click_time=datetime.now())
 
     def add_view(self, ip):
-        View.objects.create(advertiser_id=self.advertiser.id, ad_id=self.id, ip=ip, click_time=datetime.now())
+        View.objects.create(advertiser_id=self.advertiser.id, ad_id=self.id, ip=ip, view_time=datetime.now())
 
     def get_absolute_url(self):
         return reverse('show-all-ads')
