@@ -1,4 +1,4 @@
-from .models import Ad, Advertiser, View, Click
+from .models import Ad, View, Click
 
 
 class IpMiddleware:
