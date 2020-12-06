@@ -10,23 +10,24 @@ class IpMiddleware:
         return response
 
     def process_template_response(self, request, response):
-        # for ad_detail.html
-        click_and_viewed_dic = {}
-        for i in Ad.objects.all():
-            click_and_viewed_hour = {}
-            all_clicks = 0
-            all_views = 0
-            for z in range(0, 24):
-                clicks = Click.objects.filter(ad_id=i.id, click_time__hour=z).count()
-                views = View.objects.filter(ad_id=i.id, view_time__hour=z).count()
-                all_clicks += clicks
-                all_views += views
-                if views != 0:
-                    click_and_viewed_hour[str(z)] = (clicks, views, float("{0:.4f}".format(clicks / views)))
-                else:
-                    click_and_viewed_hour[str(z)] = (clicks, views, 0)
-            click_and_viewed_dic[i] = (
-                click_and_viewed_hour, all_clicks, all_views, float("{0:.4f}".format(all_clicks / all_views)))
+        # just for ad_detail.html
+        if request.get_full_path() == '/ad/detail/':
+            click_and_viewed_dic = {}
+            for i in Ad.objects.all():
+                click_and_viewed_hour = {}
+                all_clicks = 0
+                all_views = 0
+                for z in range(0, 24):
+                    clicks = Click.objects.filter(ad_id=i.id, click_time__hour=z).count()
+                    views = View.objects.filter(ad_id=i.id, view_time__hour=z).count()
+                    all_clicks += clicks
+                    all_views += views
+                    if views != 0:
+                        click_and_viewed_hour[str(z)] = (clicks, views, float("{0:.4f}".format(clicks / views)))
+                    else:
+                        click_and_viewed_hour[str(z)] = (clicks, views, 0)
+                click_and_viewed_dic[i] = (
+                    click_and_viewed_hour, all_clicks, all_views, float("{0:.4f}".format(all_clicks / all_views)))
 
             # a dictionary which it keys are ad objects and  it values are
             # 0 : a dic : keys = hour , value = (click in that hour, view in that hour, click per view in that hour)
