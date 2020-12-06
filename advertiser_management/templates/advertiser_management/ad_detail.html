@@ -9,13 +9,22 @@
             <div class="card mt-2 p-2">
                 <h3>{{ ad.title }}</h3><h5>id = {{ ad.id }} total clicks ={{ dic.1 }} total views = {{ dic.2 }}</h5>
                 <h6>click per view is {{ dic.3 }}</h6>
-                {% for hour, click_view in dic.0.items %}
-                    <div>
-                        {{ click_view.1 }} views and {{ click_view.0 }} clicks in {{ hour }} 'oclock which
-                        means {{ click_view.2 }} click per view
-                    </div>
-
-                {% endfor %}
+                <table style="width:70%" border="1px">
+                    <tr>
+                        <th>Hour</th>
+                        <th>View</th>
+                        <th>Click</th>
+                        <th>Click per view</th>
+                    </tr>
+                    {% for hour, click_view in dic.0.items %}
+                        <tr>
+                            <td>{{ hour }}</td>
+                            <td>{{ click_view.1 }}</td>
+                            <td>{{ click_view.0 }}</td>
+                            <td>{{ click_view.2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
         {% endfor %}
     </div>
