@@ -28,10 +28,11 @@ class IpMiddleware:
             click_and_viewed_dic[i] = (
                 click_and_viewed_hour, all_clicks, all_views, float("{0:.4f}".format(all_clicks / all_views)))
 
-        # a dictionary which it keys are ad objects and  it values are
-        # 0 : a dic : keys = hour , value = (click in that hour, view in that hour)
-        # 1 : count of all clicks of that ad
-        # 2 : count of all views of that ad
-        # 3 : click per view of that ad
-        response.context_data['click_and_viewed_dic'] = click_and_viewed_dic
+            # a dictionary which it keys are ad objects and  it values are
+            # 0 : a dic : keys = hour , value = (click in that hour, view in that hour, click per view in that hour)
+            # 1 : count of all clicks of that ad
+            # 2 : count of all views of that ad
+            # 3 : click per view of that ad
+            response.context_data['click_and_viewed_dic'] = click_and_viewed_dic
+
         return response
