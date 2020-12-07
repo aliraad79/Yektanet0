@@ -56,7 +56,7 @@ def ads_detail():
             if all_views != 0:
                 click_and_viewed_dic[i] = (
                     click_and_viewed_hour, all_clicks, all_views, float("{0:.4f}".format(all_clicks / all_views)),
-                    estimated_time_to_click_ad[i])
+                    timedelta(0))
             # check if ad not been viewed
             else:
                 click_and_viewed_dic[i] = (
