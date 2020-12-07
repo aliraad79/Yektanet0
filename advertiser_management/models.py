@@ -1,6 +1,5 @@
 from django.db import models
 from django.shortcuts import reverse
-from datetime import datetime
 
 
 class Advertiser(models.Model):
@@ -14,10 +13,10 @@ class Advertiser(models.Model):
         return reverse('show-all-ads')
 
     def get_clicks(self):
-        return Click.objects.filter(advertiser_id=self.id).count()
+        return Click.objects.filter(advertiser=self).count()
 
     def get_views(self):
-        return View.objects.filter(advertiser_id=self.id).count()
+        return View.objects.filter(advertiser=self).count()
 
 
 class Ad(models.Model):
@@ -32,10 +31,10 @@ class Ad(models.Model):
         return self.title + " " + str(self.id)
 
     def add_click(self, ip):
-        Click.objects.create(ad_id=self.id, ip=ip, click_time=datetime.now())
+        Click.objects.create(ad=self, advertiser=self.advertiser, ip=ip)
 
     def add_view(self, ip):
-        View.objects.create(ad_id=self.id, ip=ip, view_time=datetime.now())
+        View.objects.create(ad=self, advertiser=self.advertiser, ip=ip)
 
     def get_absolute_url(self):
         return reverse('show-all-ads')
@@ -46,11 +45,13 @@ class Ad(models.Model):
 
 class Click(models.Model):
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE)
+    advertiser = models.ForeignKey(Advertiser, on_delete=models.CASCADE)
     ip = models.GenericIPAddressField()
     click_time = models.DateTimeField(auto_now_add=True)
 
 
 class View(models.Model):
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE)
+    advertiser = models.ForeignKey(Advertiser, on_delete=models.CASCADE)
     ip = models.GenericIPAddressField()
     view_time = models.DateTimeField(auto_now_add=True)
