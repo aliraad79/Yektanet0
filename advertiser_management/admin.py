@@ -3,10 +3,11 @@ from .models import Ad, Advertiser
 
 
 @admin.register(Ad)
-class PersonAdmin(admin.ModelAdmin):
+class AdAdmin(admin.ModelAdmin):
     list_display = ('title', 'advertiser', 'approve')
     list_filter = ('approve',)
     search_fields = ('title',)
+    list_editable = ('approve',)
 
 
 @admin.register(Advertiser)
