@@ -6,6 +6,9 @@ from datetime import timedelta
 
 
 def ads_detail():
+    """
+        function to process data and show more data about ads
+    """
     # estimate time for an ad
     time_to_watch_ad = {}
     estimated_time_to_click_ad = {}
@@ -34,7 +37,8 @@ def ads_detail():
                 click_and_viewed_hour[str(z)] = (clicks, views, float("{0:.4f}".format(clicks / views)))
             else:
                 click_and_viewed_hour[str(z)] = (clicks, views, 0)
-
+        click_and_viewed_hour = {k: v for k, v in
+                                 sorted(click_and_viewed_hour.items(), key=lambda item: item[1][2], reverse=True)}
         # check if ad has been clicked
         if i in estimated_time_to_click_ad.keys():
             # check if ad been viewed

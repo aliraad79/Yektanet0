@@ -10,7 +10,11 @@
             <div class="card mt-2 p-2">
                 <h3>{{ ad.title }}</h3><h5>id = {{ ad.id }} total clicks ={{ dic.1 }} total views = {{ dic.2 }}</h5>
                 <h6>click per view is {{ dic.3 }}</h6>
-                <h6>Estimated time for click :  {{ dic.4|smooth_timedelta }}</h6>
+                {% if dic.4 %}
+                    <h6>Estimated time for click : {{ dic.4|smooth_timedelta }}</h6>
+                {% else %}
+                    Not been Clicked yet.
+                {% endif %}
                 <table style="width:70%" border="1px">
                     <tr>
                         <th>Hour</th>
