@@ -1,8 +1,12 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 from .models import Advertiser, Ad, Click, View
-from django.views.generic import CreateView, RedirectView, ListView, DetailView
-from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import RedirectView, ListView
 from datetime import timedelta
+from .serializers import AdvertiserSerializer, ShowAdSerializer, CreateAdSerializer
+from rest_framework import viewsets
 
 
 def ads_detail():
@@ -70,19 +74,6 @@ def ads_detail():
     return click_and_viewed_dic
 
 
-class AdvertiserListView(ListView):
-    model = Advertiser
-    template_name = 'advertiser_management/ads.html'
-    context_object_name = 'advertisers'
-
-    def get(self, request, *args, **kwargs):
-        ip = request.META.get('REMOTE_ADDR')
-        for i in Advertiser.objects.all():
-            for j in i.ads.filter(approve=True):
-                j.add_view(ip)
-        return super().get(request, *args, **kwargs)
-
-
 class AdListView(ListView):
     model = Ad
     template_name = 'advertiser_management/ad_detail.html'
@@ -94,25 +85,36 @@ class AdListView(ListView):
         return context
 
 
-class CountAdClick(RedirectView):
+class AdvertiserViewSet(viewsets.ModelViewSet):
+    """
+    A ViewSet for listing and creating advertiser.
+    """
+    queryset = Advertiser.objects.all()
+    serializer_class = AdvertiserSerializer
 
-    def get_redirect_url(self, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
+        ip = request.META.get('REMOTE_ADDR')
+        for i in Advertiser.objects.all():
+            for j in i.ads.filter(approve=True):
+                j.add_view(ip)
+        return super().list(request, *args, **kwargs)
+
+
+class AdViewSet(viewsets.ModelViewSet):
+    """
+    A ViewSet for listing and creating ads.
+    """
+    queryset = Ad.objects.all()
+    serializers = {
+        'create': CreateAdSerializer,
+        'default': ShowAdSerializer
+    }
+
+    def get_serializer_class(self):
+        return self.serializers.get(self.action, self.serializers['default'])
+
+    @action(detail=False, methods=['GET'], name='Click add')
+    def click(self, request, *args, **kwargs):
         ad = get_object_or_404(Ad, pk=kwargs['ad_id'])
         ad.add_click(self.request.META.get('REMOTE_ADDR'))
-        return ad.link
-
-
-class CreateAd(SuccessMessageMixin, CreateView):
-    model = Ad
-    fields = ['advertiser', 'title', 'image', 'link']
-    success_message = "Ad created successfully!!!"
-
-
-class CreateAdvertiser(SuccessMessageMixin, CreateView):
-    model = Advertiser
-    fields = ['name']
-    success_message = "Advertiser created successfully!!"
-
-
-class AdvertiserDetail(DetailView):
-    model = Advertiser
+        return Response(ad.link)
