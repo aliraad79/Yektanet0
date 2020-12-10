@@ -2,14 +2,14 @@ from django.shortcuts import render
 from rest_framework import mixins, generics
 from advertiser_management.models import Advertiser
 from .serializers import AdvertiserSerializer
+from rest_framework import viewsets
 
 
-class AdvertiserViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+class AdvertiserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Advertiser.objects.all()
     serializer_class = AdvertiserSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+class AdvertiserDetail(generics.RetrieveAPIView):
+    queryset = Advertiser.objects.all()
+    serializer_class = AdvertiserSerializer
