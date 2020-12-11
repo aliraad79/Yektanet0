@@ -18,6 +18,9 @@ class Advertiser(models.Model):
     def get_views(self):
         return View.objects.filter(advertiser=self).count()
 
+    def approved_ads(self):
+        return Ad.objects.filter(advertiser=self, approve=True)
+
 
 class Ad(models.Model):
     id = models.AutoField(primary_key=True)

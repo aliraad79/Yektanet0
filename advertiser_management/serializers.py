@@ -49,13 +49,6 @@ def ad_detail(ad):
     return click_and_viewed_dic
 
 
-class AdvertiserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Advertiser
-        fields = ['id', 'name', 'ads']
-        depth = 1
-
-
 class CreateAdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ad
@@ -77,3 +70,11 @@ class DetailAdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ad
         fields = ['id', 'title', 'image', 'link', 'approve', 'advertiser', 'detail']
+
+
+class AdvertiserSerializer(serializers.ModelSerializer):
+    ads = ShowAdSerializer(many=True, read_only=True, source="approved_ads")
+
+    class Meta:
+        model = Advertiser
+        fields = ['id', 'name', 'ads']
