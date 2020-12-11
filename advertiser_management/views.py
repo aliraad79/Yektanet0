@@ -29,8 +29,7 @@ class AdViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'], name='ads with detail')
     def extra(self, request, *args, **kwargs):
-        queryset = Ad.objects.all()
-
+        queryset = self.get_queryset()
         serialize = self.get_serializer(queryset, many=True)
         return Response(serialize.data)
 

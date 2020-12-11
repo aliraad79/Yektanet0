@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'advertiser_management.apps.AdvertiserManagementConfig',
-    'crispy_forms',
     'rest_framework',
 ]
 
