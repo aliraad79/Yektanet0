@@ -14,7 +14,7 @@ class AdViewSet(viewsets.ModelViewSet):
     serializers = {
         'create': CreateAdSerializer,
         'update': CreateAdSerializer,
-        'extra': DetailAdSerializer,
+        'list': DetailAdSerializer,
         'default': ShowAdSerializer,
     }
 
@@ -26,12 +26,6 @@ class AdViewSet(viewsets.ModelViewSet):
         ad = self.get_queryset().get(pk=pk)
         ad.add_click(request.META.get('REMOTE_ADDR'))
         return Response(ad.link)
-
-    @action(detail=False, methods=['GET'], name='ads with detail')
-    def extra(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serialize = self.get_serializer(queryset, many=True)
-        return Response(serialize.data)
 
 
 class AdvertiserViewSet(viewsets.ModelViewSet):
