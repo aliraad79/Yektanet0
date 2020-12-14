@@ -19,7 +19,7 @@ class Advertiser(models.Model):
         return View.objects.filter(advertiser=self).count()
 
     def approved_ads(self):
-        return Ad.objects.filter(advertiser=self, approve=True)
+        return self.ads.filter(approve=True)
 
 
 class Ad(models.Model):
